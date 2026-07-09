@@ -80,54 +80,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
               SizedBox(height: 16),
               
               // Choferes
-              _ResourceSection(
-                title: 'Choferes',
-                items: [
-                  _ResourceItem(
-                    label: 'Activos',
-                    value: dashboardProvider.choferesActivos.toString(),
-                    color: Colors.green,
+              Row(
+                children: [
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Choferes Activos',
+                      value: dashboardProvider.choferesActivos.toString(),
+                      color: Colors.green,
+                    ),
                   ),
-                  _ResourceItem(
-                    label: 'Inactivos',
-                    value: dashboardProvider.choferesInactivos.toString(),
-                    color: Colors.red,
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Choferes Inactivos',
+                      value: dashboardProvider.choferesInactivos.toString(),
+                      color: Colors.red,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 16),
               
               // Vehículos
-              _ResourceSection(
-                title: 'Vehículos',
-                items: [
-                  _ResourceItem(
-                    label: 'En Ruta',
-                    value: dashboardProvider.vehiculosEnRuta.toString(),
-                    color: Colors.blue,
+              Row(
+                children: [
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Vehículos en Ruta',
+                      value: dashboardProvider.vehiculosEnRuta.toString(),
+                      color: Colors.blue,
+                    ),
                   ),
-                  _ResourceItem(
-                    label: 'Mantenimiento',
-                    value: dashboardProvider.vehiculosMantenimiento.toString(),
-                    color: Colors.orange,
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Vehículos en Mantenimiento',
+                      value: dashboardProvider.vehiculosMantenimiento.toString(),
+                      color: Colors.orange,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 16),
               
               // Rutas
-              _ResourceSection(
-                title: 'Rutas',
-                items: [
-                  _ResourceItem(
-                    label: 'Activas',
-                    value: dashboardProvider.rutasActivas.toString(),
-                    color: Colors.green,
+              Row(
+                children: [
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Rutas Activas',
+                      value: dashboardProvider.rutasActivas.toString(),
+                      color: Colors.green,
+                    ),
                   ),
-                  _ResourceItem(
-                    label: 'Inactivas',
-                    value: dashboardProvider.rutasInactivas.toString(),
-                    color: Colors.grey,
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: _ResourceCard(
+                      title: 'Rutas Inactivas',
+                      value: dashboardProvider.rutasInactivas.toString(),
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ),
@@ -269,82 +281,59 @@ class _ActivityItem extends StatelessWidget {
   }
 }
 
-class _ResourceSection extends StatelessWidget {
+class _ResourceCard extends StatelessWidget {
   final String title;
-  final List<_ResourceItem> items;
-
-  const _ResourceSection({
-    required this.title,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(height: 12),
-            Row(
-              children: items,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ResourceItem extends StatelessWidget {
-  final String label;
   final String value;
   final Color color;
 
-  const _ResourceItem({
-    required this.label,
+  const _ResourceCard({
+    required this.title,
     required this.value,
     required this.color,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 8),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
-        ),
-        Spacer(),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: color,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
