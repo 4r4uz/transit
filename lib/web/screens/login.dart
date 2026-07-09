@@ -31,12 +31,21 @@ class Login extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       // Logo
-                      Image.asset(
-                        'assets/ruralink.jpeg',
-                        height: 120,
-                        width: 120,
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.white,
+                          child: Image.asset(
+                            'assets/ruralink.png',
+                            height: 100,
+                            width: 100,
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 24),
                     Text(
                       'RuraLink',
                       textAlign: TextAlign.center,
@@ -63,14 +72,6 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.all(24.0),
                         child: Column(
                           children: [
-                            Text(
-                              'Iniciar Sesión',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 24),
                             _LoginForm(),
                             SizedBox(height: 16),
                             // Credenciales de demo

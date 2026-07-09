@@ -23,10 +23,20 @@ class AdminSidebar extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                Image.asset(
-                  'assets/ruralink.jpeg',
-                  height: 40,
-                  width: 40,
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.white,
+                    child: Image.asset(
+                      'assets/ruralink.png',
+                      height: 70,
+                      width:70,
+                    ),
+                  ),
                 ),
                 SizedBox(width: 12),
                 Expanded(
@@ -43,10 +53,7 @@ class AdminSidebar extends StatelessWidget {
                       ),
                       Text(
                         'Panel Admin',
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
                       ),
                     ],
                   ),
@@ -59,7 +66,7 @@ class AdminSidebar extends StatelessWidget {
             ),
           ),
           Divider(color: Colors.grey[700], height: 1),
-          
+
           // Navigation items
           Expanded(
             child: ListView(
@@ -117,7 +124,7 @@ class AdminSidebar extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // User info at bottom
           Divider(color: Colors.grey[700], height: 1),
           Container(
@@ -164,14 +171,13 @@ class AdminSidebar extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: isActive ? Colors.blue.withValues(alpha: 0.2) : Colors.transparent,
+        color: isActive
+            ? Colors.blue.withValues(alpha: 0.2)
+            : Colors.transparent,
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: isActive ? Colors.blue : Colors.grey[400],
-        ),
+        leading: Icon(icon, color: isActive ? Colors.blue : Colors.grey[400]),
         title: Text(
           label,
           style: TextStyle(
