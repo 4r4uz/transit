@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'admin_sidebar.dart';
 
-class AdminShell extends StatelessWidget {
+class AdminShell extends StatefulWidget {
   final Widget child;
   final String currentRoute;
 
@@ -12,14 +12,22 @@ class AdminShell extends StatelessWidget {
   });
 
   @override
+  State<AdminShell> createState() => _AdminShellState();
+}
+
+class _AdminShellState extends State<AdminShell> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: Row(
         children: [
           // Sidebar - visible en desktop
           if (MediaQuery.of(context).size.width >= 768)
             AdminSidebar(
-              currentRoute: currentRoute,
+              currentRoute: widget.currentRoute,
               onClose: () {},
             )
           else
@@ -41,7 +49,7 @@ class AdminShell extends StatelessWidget {
                         IconButton(
                           icon: Icon(Icons.menu),
                           onPressed: () {
-                            Scaffold.of(context).openDrawer();
+                            scaffoldKey.currentState?.openDrawer();
                           },
                         ),
                       
@@ -49,7 +57,7 @@ class AdminShell extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            _getTitle(currentRoute),
+                            _getTitle(widget.currentRoute),
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
@@ -72,7 +80,7 @@ class AdminShell extends StatelessWidget {
                 ),
                 
                 // Contenido de la página
-                Expanded(child: child),
+                Expanded(child: widget.child),
               ],
             ),
           ),
@@ -82,7 +90,7 @@ class AdminShell extends StatelessWidget {
       drawer: MediaQuery.of(context).size.width < 768
           ? Drawer(
               child: AdminSidebar(
-                currentRoute: currentRoute,
+                currentRoute: widget.currentRoute,
                 onClose: () => Navigator.pop(context),
               ),
             )
