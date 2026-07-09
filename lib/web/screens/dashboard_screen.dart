@@ -72,64 +72,128 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 32),
 
-              // Metrics cards
-              Row(
-                children: [
-                  Expanded(
-                    child: _MetricCard(
-                      title: 'Viajes en Curso',
-                      value: dashboardProvider.viajesActivos.toString(),
-                      icon: Icons.navigation,
-                      color: Colors.green,
-                    ),
+              // Resumen de Recursos
+              Text(
+                'Resumen',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 16),
+              
+              // Choferes
+              _ResourceSection(
+                title: 'Choferes',
+                items: [
+                  _ResourceItem(
+                    label: 'Activos',
+                    value: dashboardProvider.choferesActivos.toString(),
+                    color: Colors.green,
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: _MetricCard(
-                      title: 'Por Salir',
-                      value: '3',
-                      icon: Icons.schedule,
-                      color: Colors.orange,
-                    ),
+                  _ResourceItem(
+                    label: 'Inactivos',
+                    value: dashboardProvider.choferesInactivos.toString(),
+                    color: Colors.red,
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: _MetricCard(
-                      title: 'Vehículos Activos',
-                      value: dashboardProvider.vehiculosActivos.toString(),
-                      icon: Icons.directions_bus,
-                      color: Colors.blue,
-                    ),
+              SizedBox(height: 12),
+              
+              // Vehículos
+              _ResourceSection(
+                title: 'Vehículos',
+                items: [
+                  _ResourceItem(
+                    label: 'En Ruta',
+                    value: dashboardProvider.vehiculosEnRuta.toString(),
+                    color: Colors.blue,
                   ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: _MetricCard(
-                      title: 'Cancelados',
-                      value: '1',
-                      icon: Icons.cancel,
-                      color: Colors.red,
-                    ),
+                  _ResourceItem(
+                    label: 'Mantenimiento',
+                    value: dashboardProvider.vehiculosMantenimiento.toString(),
+                    color: Colors.orange,
+                  ),
+                ],
+              ),
+              SizedBox(height: 12),
+              
+              // Rutas
+              _ResourceSection(
+                title: 'Rutas',
+                items: [
+                  _ResourceItem(
+                    label: 'Activas',
+                    value: dashboardProvider.rutasActivas.toString(),
+                    color: Colors.green,
+                  ),
+                  _ResourceItem(
+                    label: 'Inactivas',
+                    value: dashboardProvider.rutasInactivas.toString(),
+                    color: Colors.grey,
                   ),
                 ],
               ),
               SizedBox(height: 32),
 
-              // Recent activity section
+              // Horarios de Hoy
+              Text(
+                'Horarios',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 16),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      _ScheduleItem(
+                        route: 'Ruta Los Lagos - Puerto Montt',
+                        bus: 'ABCD-12',
+                        driver: 'Juan Pérez',
+                        startTime: '08:00',
+                        endTime: '09:30',
+                        status: 'En curso',
+                        statusColor: Colors.green,
+                        passengers: 18,
+                      ),
+                      Divider(height: 24),
+                      _ScheduleItem(
+                        route: 'Ruta Río Negro - Osorno',
+                        bus: 'EFGH-34',
+                        driver: 'María González',
+                        startTime: '09:30',
+                        endTime: '11:00',
+                        status: 'Por salir',
+                        statusColor: Colors.orange,
+                        passengers: 0,
+                      ),
+                      Divider(height: 24),
+                      _ScheduleItem(
+                        route: 'Ruta Los Lagos - Puerto Montt',
+                        bus: 'IJKL-56',
+                        driver: 'Carlos Muñoz',
+                        startTime: '10:00',
+                        endTime: '11:30',
+                        status: 'Por salir',
+                        statusColor: Colors.orange,
+                        passengers: 0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+
+              // Actividad Reciente
+              Text(
+                'Actividad Reciente',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 16),
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Actividad Reciente',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 16),
                       _ActivityItem(
                         icon: Icons.route,
                         title: 'Nueva ruta creada',
@@ -158,59 +222,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class _MetricCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-  final Color color;
-
-  const _MetricCard({
-    required this.title,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color, size: 32),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -252,6 +263,188 @@ class _ActivityItem extends StatelessWidget {
         Text(
           time,
           style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+        ),
+      ],
+    );
+  }
+}
+
+class _ResourceSection extends StatelessWidget {
+  final String title;
+  final List<_ResourceItem> items;
+
+  const _ResourceSection({
+    required this.title,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 12),
+            Row(
+              children: items,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ResourceItem extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color color;
+
+  const _ResourceItem({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+          ),
+        ),
+        SizedBox(width: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+          ),
+        ),
+        Spacer(),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ScheduleItem extends StatelessWidget {
+  final String route;
+  final String bus;
+  final String driver;
+  final String startTime;
+  final String endTime;
+  final String status;
+  final Color statusColor;
+  final int passengers;
+
+  const _ScheduleItem({
+    required this.route,
+    required this.bus,
+    required this.driver,
+    required this.startTime,
+    required this.endTime,
+    required this.status,
+    required this.statusColor,
+    required this.passengers,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    route,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: statusColor.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      status,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: statusColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 4),
+              Text(
+                'Bus: $bus • Chofer: $driver',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 16),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
+                SizedBox(width: 4),
+                Text(
+                  '$startTime - $endTime',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ],
+            ),
+            if (passengers > 0) ...[
+              SizedBox(height: 4),
+              Text(
+                '$passengers pasajeros',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[500],
+                ),
+              ),
+            ],
+          ],
         ),
       ],
     );
